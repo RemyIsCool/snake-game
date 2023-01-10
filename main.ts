@@ -3,28 +3,42 @@ interface Part {
     y: number
 }
 
-const snake: Part[] = [{ x: 2, y: 0 }, { x: 1, y: 0 }, {x: 0, y: 0}]
+const snake: Part[] = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, {x: 0, y: 0}]
 
 let direction: 'up' | 'down' | 'left' | 'right' = 'right'
 
 input.onButtonPressed(Button.A, () => {
-    if (direction === 'right') return
-    direction = 'left'
+    switch (direction) {
+        case 'up':
+            direction = 'left'
+            break
+        case 'down':
+            direction = 'right'
+            break
+        case 'left':
+            direction = 'down'
+            break
+        case 'right':
+            direction = 'up'
+            break
+    }
 })
 
 input.onButtonPressed(Button.B, () => {
-    if (direction === 'left') return
-    direction = 'right'
-})
-
-input.onPinPressed(TouchPin.P0, () => {
-    if (direction === 'down') return
-    direction = 'up'
-})
-
-input.onPinPressed(TouchPin.P1, () => {
-    if (direction === 'up') return
-    direction = 'down'
+    switch (direction) {
+        case 'up':
+            direction = 'right'
+            break
+        case 'down':
+            direction = 'left'
+            break
+        case 'left':
+            direction = 'up'
+            break
+        case 'right':
+            direction = 'down'
+            break
+    }
 })
 
 loops.everyInterval(1000, () => {
@@ -53,7 +67,7 @@ loops.everyInterval(1000, () => {
             break
     }
 
-    if (nextSpot.x >= 5 || nextSpot.x < 0 || nextSpot.y >= 5 || nextSpot.y < 0) {
+    if (nextSpot.x >= 5 || nextSpot.x < 0 || nextSpot.y >= 5 || nextSpot.y < 0 || nextSpot.x in snake) {
         control.reset()
     }
 
